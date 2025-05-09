@@ -31,7 +31,7 @@ const HomeScreen = ({ navigation }: any) => {
           )}
         </Card.Content>
         <Card.Actions>
-          <Button onPress={() => navigation.navigate('FastingTimer')}>
+          <Button onPress={() => navigation.navigate('Fasting')}>
             {currentFastingSession ? 'View Fast' : 'Start Fast'}
           </Button>
         </Card.Actions>

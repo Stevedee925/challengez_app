@@ -1,11 +1,15 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { IconButton } from 'react-native-paper';
-import { defaultTheme } from '../constants/theme';
+import { IconButton, ActivityIndicator, MD3LightTheme } from 'react-native-paper';
+import { View, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Screens
+// Onboarding
+import OnboardingScreen from '../screens/onboarding/OnboardingScreen';
+import PhoenixOnboardingScreen from '../screens/onboarding/phoenix/PhoenixOnboardingScreen';
+
+// Main Screens
 import HomeScreen from '../screens/HomeScreen';
 import FastingTimerScreen from '../screens/FastingTimerScreen';
 import JournalScreen from '../screens/JournalScreen';
@@ -13,7 +17,10 @@ import ChallengesScreen from '../screens/ChallengesScreen';
 import RitualsScreen from '../screens/RitualsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
-// Stack navigators
+// Root navigator
+const RootStack = createNativeStackNavigator();
+
+// Stack navigators for tabs
 const HomeStack = createNativeStackNavigator();
 const FastingStack = createNativeStackNavigator();
 const JournalStack = createNativeStackNavigator();
@@ -115,11 +122,10 @@ const ProfileStackNavigator = () => {
   );
 };
 
-// Main app navigator
-const AppNavigator = () => {
+// Main tab navigator
+const MainTabNavigator = () => {
   return (
-    <NavigationContainer theme={defaultTheme}>
-      <Tab.Navigator
+    <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName = 'circle'; // Default icon
@@ -140,7 +146,7 @@ const AppNavigator = () => {
 
             return <IconButton icon={iconName} size={size} iconColor={color} />;
           },
-          tabBarActiveTintColor: defaultTheme.colors.primary,
+          tabBarActiveTintColor: '#6200ee',
           tabBarInactiveTintColor: 'gray',
           headerShown: false,
         })}
@@ -152,8 +158,62 @@ const AppNavigator = () => {
         <Tab.Screen name="Rituals" component={RitualsStackNavigator} />
         <Tab.Screen name="Profile" component={ProfileStackNavigator} />
       </Tab.Navigator>
-    </NavigationContainer>
   );
 };
+
+// Main app navigator with onboarding check
+const AppNavigator = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [onboardingCompleted, setOnboardingCompleted] = useState(false);
+
+  useEffect(() => {
+    // Check if onboarding has been completed
+    const checkOnboarding = async () => {
+      try {
+        const value = await AsyncStorage.getItem('onboardingCompleted');
+        setOnboardingCompleted(value === 'true');
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error checking onboarding status:', error);
+        setIsLoading(false);
+      }
+    };
+
+    checkOnboarding();
+  }, []);
+
+  // Handle onboarding completion
+  const handleOnboardingComplete = () => {
+    setOnboardingCompleted(true);
+  };
+
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#6200ee" />
+      </View>
+    );
+  }
+
+  return (
+    <RootStack.Navigator screenOptions={{ headerShown: false }}>
+      {!onboardingCompleted ? (
+        <RootStack.Screen name="Onboarding">
+          {props => <PhoenixOnboardingScreen {...props} onComplete={handleOnboardingComplete} />}
+        </RootStack.Screen>
+      ) : (
+        <RootStack.Screen name="MainApp" component={MainTabNavigator} />
+      )}
+    </RootStack.Navigator>
+  );
+};
+
+const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default AppNavigator;
