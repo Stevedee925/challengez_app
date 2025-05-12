@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView, FlatList } from 'react-native';
+import { phoenixTheme, phoenixColors } from '../constants/theme';
 import { 
   Text, 
   Card, 
@@ -334,6 +335,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor: phoenixColors.background,
   },
   screenTitle: {
     fontSize: 24,

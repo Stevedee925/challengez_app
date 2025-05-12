@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView, FlatList } from 'react-native';
+import { phoenixTheme, phoenixColors } from '../constants/theme';
 import { 
   Text, 
   Card, 
@@ -17,7 +18,7 @@ import { JournalEntry } from '../types';
 
 const JournalScreen = ({ navigation, route }: any) => {
   const [entries, setEntries] = useState<JournalEntry[]>(dummyJournalEntries);
-  const [isCreating, setIsCreating] = useState<boolean>(route?.params?.action === 'create');
+  const [isCreating, setIsCreating] = useState<boolean>(true);
   const [viewingEntry, setViewingEntry] = useState<JournalEntry | null>(null);
   
   // Form state
@@ -240,6 +241,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor: phoenixColors.background,
   },
   screenTitle: {
     fontSize: 24,

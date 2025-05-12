@@ -1,16 +1,26 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { Text, Card, Button, useTheme } from 'react-native-paper';
+import { Text, Card, Button, useTheme, Avatar } from 'react-native-paper';
+import AnimatedBackground from '../components/AnimatedBackground';
+import { phoenixTheme, phoenixColors } from '../constants/theme';
 import { dummyFastingSessions, dummyJournalEntries } from '../constants/dummyData';
 
 const HomeScreen = ({ navigation }: any) => {
-  const theme = useTheme();
+  const theme = phoenixTheme;
   const currentFastingSession = dummyFastingSessions.find(session => session.endTime === null);
   const recentJournalEntries = dummyJournalEntries.slice(0, 2);
 
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.greeting}>Hello, John!</Text>
+    <View style={styles.containerWrapper}>
+      <AnimatedBackground position="top-right" animation="morphing" opacity={0.1} />
+      <ScrollView style={styles.container}>
+      <View style={styles.greetingContainer}>
+        <Avatar.Text size={50} label="J" style={styles.avatar} />
+        <View>
+          <Text style={styles.greeting}>Hello, John!</Text>
+          <Text style={styles.date}>{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</Text>
+        </View>
+      </View>
       
       {/* Current Fasting Status */}
       <Card style={styles.card}>
@@ -86,18 +96,38 @@ const HomeScreen = ({ navigation }: any) => {
         </Card.Content>
       </Card>
     </ScrollView>
+      <AnimatedBackground position="bottom-left" animation="morphing" opacity={0.08} size={200} speed={0.5} />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  containerWrapper: {
+    flex: 1,
+    position: 'relative',
+    backgroundColor: phoenixColors.background,
+  },
   container: {
     flex: 1,
     padding: 16,
   },
+  greetingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  avatar: {
+    marginRight: 16,
+    backgroundColor: phoenixColors.primary,
+  },
+  date: {
+    opacity: 0.6,
+    fontSize: 14,
+  },
   greeting: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 16,
+    marginBottom: 2,
   },
   card: {
     marginBottom: 16,

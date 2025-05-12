@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { IconButton, ActivityIndicator, MD3LightTheme } from 'react-native-paper';
+import { IconButton, ActivityIndicator } from 'react-native-paper';
+import { phoenixColors } from '../constants/theme';
 import { View, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -12,10 +13,13 @@ import PhoenixOnboardingScreen from '../screens/onboarding/phoenix/PhoenixOnboar
 // Main Screens
 import HomeScreen from '../screens/HomeScreen';
 import FastingTimerScreen from '../screens/FastingTimerScreen';
+import FastingHistoryScreen from '../screens/FastingHistoryScreen';
 import JournalScreen from '../screens/JournalScreen';
 import ChallengesScreen from '../screens/ChallengesScreen';
 import RitualsScreen from '../screens/RitualsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+
+// Landing page has been moved to a standalone HTML file
 
 // Root navigator
 const RootStack = createNativeStackNavigator();
@@ -53,8 +57,23 @@ const FastingStackNavigator = () => {
       <FastingStack.Screen 
         name="FastingTimerScreen" 
         component={FastingTimerScreen} 
-        options={{ 
+        options={({ navigation }) => ({ 
           title: 'Fasting Timer',
+          headerTitleStyle: { fontWeight: 'bold' },
+          headerRight: () => (
+            <IconButton
+              icon="history"
+              onPress={() => navigation.navigate('FastingHistoryScreen')}
+              iconColor={phoenixColors.primary}
+            />
+          ),
+        })} 
+      />
+      <FastingStack.Screen 
+        name="FastingHistoryScreen" 
+        component={FastingHistoryScreen} 
+        options={{ 
+          title: 'Fasting History',
           headerTitleStyle: { fontWeight: 'bold' }
         }} 
       />
@@ -146,7 +165,7 @@ const MainTabNavigator = () => {
 
             return <IconButton icon={iconName} size={size} iconColor={color} />;
           },
-          tabBarActiveTintColor: '#6200ee',
+          tabBarActiveTintColor: phoenixColors.primary,
           tabBarInactiveTintColor: 'gray',
           headerShown: false,
         })}
@@ -165,6 +184,7 @@ const MainTabNavigator = () => {
 const AppNavigator = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [onboardingCompleted, setOnboardingCompleted] = useState(false);
+  const [showLanding, setShowLanding] = useState(false); // No longer showing landing page in the app
 
   useEffect(() => {
     // Check if onboarding has been completed
@@ -190,11 +210,13 @@ const AppNavigator = () => {
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#6200ee" />
+        <ActivityIndicator size="large" color={phoenixColors.primary} />
       </View>
     );
   }
 
+
+  // Default: onboarding logic
   return (
     <RootStack.Navigator screenOptions={{ headerShown: false }}>
       {!onboardingCompleted ? (

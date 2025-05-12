@@ -5,6 +5,16 @@ export interface User {
   id: string;
   email: string;
   name: string;
+  profileImage?: string; // URI to stored image
+  stats?: {
+    age?: number;
+    weight?: number;
+    height?: number;
+    fitnessLevel?: 'beginner' | 'intermediate' | 'advanced';
+    goals?: string[];
+    weeklyActivityLevel?: number; // days per week
+  };
+  transformationDrivers?: string[]; // Store selected transformation drivers
 }
 
 // Fasting session type
@@ -35,6 +45,16 @@ export interface Challenge {
   startDate: number; // timestamp
   endDate: number | null; // timestamp or null if ongoing
   progress: ChallengeProgress[];
+  type?: 'fasting' | 'custom' | 'ai-generated'; // Type of challenge
+  fastingDuration?: number; // Duration in hours for fasting challenges
+  fastingType?: 'intermittent' | 'omad'; // Type of fasting
+  daysRequired?: number; // Number of days required to complete the challenge
+  trophy?: {
+    name: string;
+    description: string;
+    image?: string;
+    awarded: boolean;
+  }; // Trophy awarded upon completion
 }
 
 // Challenge progress type

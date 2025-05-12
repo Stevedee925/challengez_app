@@ -1,43 +1,53 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet, Animated } from 'react-native';
-import { Text } from 'react-native-paper';
+import { View, StyleSheet } from 'react-native';
+import { Text, IconButton } from 'react-native-paper';
 import { phoenixColors } from '../constants/theme';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withRepeat,
+  withSequence,
+  withTiming,
+  Easing,
+} from 'react-native-reanimated';
 
 interface TimerDisplayProps {
   elapsedTime: number;
   targetDuration: number;
   progress: number;
+  showFastingState?: boolean;
 }
 
 const TimerDisplay: React.FC<TimerDisplayProps> = ({
   elapsedTime,
   targetDuration,
   progress,
+  showFastingState = true,
 }) => {
   // Animation for pulse effect
-  const pulseAnim = new Animated.Value(1);
+  const pulseAnim = useSharedValue(1);
   
   // Create pulse animation when timer is running
   useEffect(() => {
-    const pulse = Animated.sequence([
-      Animated.timing(pulseAnim, {
-        toValue: 1.05,
-        duration: 800,
-        useNativeDriver: true,
-      }),
-      Animated.timing(pulseAnim, {
-        toValue: 1,
-        duration: 800,
-        useNativeDriver: true,
-      }),
-    ]);
-    
-    Animated.loop(pulse).start();
+    pulseAnim.value = withRepeat(
+      withSequence(
+        withTiming(1.05, { duration: 1000, easing: Easing.inOut(Easing.ease) }),
+        withTiming(1, { duration: 1000, easing: Easing.inOut(Easing.ease) })
+      ),
+      -1, // Infinite repeat
+      true // Reverse
+    );
     
     return () => {
-      pulseAnim.setValue(1);
+      pulseAnim.value = 1;
     };
   }, []);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: pulseAnim.value }],
+    };
+  });
 
   // Format time from milliseconds to HH:MM:SS
   const formatTime = (ms: number) => {
@@ -62,19 +72,44 @@ const TimerDisplay: React.FC<TimerDisplayProps> = ({
     return phoenixColors.secondary;
   };
 
+  // Determine fasting state based on progress
+  const getFastingState = () => {
+    if (progress < 0.5) return "Time Since Last Fast";
+    return "Fat Burning";
+  };
+
   return (
     <View style={styles.container}>
-      <Animated.View style={{ transform: [{ scale: pulseAnim }] }}>
+      <Animated.View style={animatedStyle}>
         <Text style={styles.timeDisplay}>{formatTime(elapsedTime)}</Text>
       </Animated.View>
       
-      <Text style={styles.remainingLabel}>Remaining</Text>
-      <Text style={styles.remainingTime}>{formatTime(remainingTime)}</Text>
+      {showFastingState && (
+        <View style={styles.fastingStateContainer}>
+          {progress >= 0.5 && (
+            <IconButton
+              icon="fire"
+              size={16}
+              iconColor={phoenixColors.secondary}
+              style={styles.fireIcon}
+            />
+          )}
+          <Text style={styles.fastingState}>{getFastingState()}</Text>
+        </View>
+      )}
       
-      <View style={styles.percentageContainer}>
-        <Text style={[styles.percentage, { color: getProgressColor() }]}>
-          {percentage}%
-        </Text>
+      <View style={styles.detailsContainer}>
+        <View style={styles.detailColumn}>
+          <Text style={styles.detailLabel}>Remaining</Text>
+          <Text style={styles.detailValue}>{formatTime(remainingTime)}</Text>
+        </View>
+        
+        <View style={styles.detailColumn}>
+          <Text style={styles.detailLabel}>Progress</Text>
+          <Text style={[styles.detailValue, { color: getProgressColor() }]}>
+            {percentage}%
+          </Text>
+        </View>
       </View>
     </View>
   );
@@ -84,30 +119,48 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100%',
   },
   timeDisplay: {
-    fontSize: 32,
+    fontSize: 40,
     fontWeight: 'bold',
     color: phoenixColors.text,
     marginBottom: 8,
+    letterSpacing: 1,
   },
-  remainingLabel: {
+  fastingStateContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 16,
+  },
+  fastingState: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: phoenixColors.secondary,
+  },
+  fireIcon: {
+    margin: 0,
+    marginRight: 4,
+  },
+  detailsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '80%',
+    marginTop: 8,
+  },
+  detailColumn: {
+    alignItems: 'center',
+  },
+  detailLabel: {
     fontSize: 14,
     color: phoenixColors.accent1,
-    marginBottom: 2,
+    marginBottom: 4,
   },
-  remainingTime: {
+  detailValue: {
     fontSize: 18,
     fontWeight: '600',
     color: phoenixColors.text,
-    marginBottom: 8,
-  },
-  percentageContainer: {
-    marginTop: 4,
-  },
-  percentage: {
-    fontSize: 24,
-    fontWeight: 'bold',
   },
 });
 

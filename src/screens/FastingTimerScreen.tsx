@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Alert, Animated } from 'react-native';
-import { Text, Button, Card, useTheme, Chip, IconButton } from 'react-native-paper';
+import { View, StyleSheet, Alert, ScrollView } from 'react-native';
+import { Text, Button, Card, Chip, IconButton, Divider } from 'react-native-paper';
 import { phoenixTheme, phoenixColors } from '../constants/theme';
 import { dummyFastingSessions } from '../constants/dummyData';
 import { FastingSession } from '../types';
@@ -10,6 +10,12 @@ import { useNavigation } from '@react-navigation/native';
 import CircularTimer from '../components/CircularTimer';
 import TimerControls from '../components/TimerControls';
 import TimerDisplay from '../components/TimerDisplay';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  Easing,
+} from 'react-native-reanimated';
 
 const FastingTimerScreen = () => {
   const theme = phoenixTheme;
@@ -19,7 +25,7 @@ const FastingTimerScreen = () => {
   const [progress, setProgress] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // Predefined fasting durations in hours
+  // Suggested fasting durations in hours
   const fastingOptions = [
     { label: '16:8', hours: 16 },
     { label: '18:6', hours: 18 },
@@ -167,16 +173,34 @@ const FastingTimerScreen = () => {
   };
 
   // Animation for entry
-  const entryAnim = useState(new Animated.Value(0))[0];
+  const entryOpacity = useSharedValue(0);
+  const entryScale = useSharedValue(0.9);
   
   useEffect(() => {
     // Animate entry when component mounts
-    Animated.timing(entryAnim, {
-      toValue: 1,
+    entryOpacity.value = withTiming(1, {
       duration: 800,
-      useNativeDriver: true,
-    }).start();
+      easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+    });
+    
+    entryScale.value = withTiming(1, {
+      duration: 800,
+      easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+    });
   }, []);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: entryOpacity.value,
+      transform: [{ scale: entryScale.value }],
+    };
+  });
+
+  // Determine if we should show the "Fat Burning" status
+  const shouldShowFatBurning = () => {
+    if (!currentSession) return false;
+    return progress >= 0.5; // Show after 50% progress
+  };
 
   if (isLoading) {
     return (
@@ -187,29 +211,20 @@ const FastingTimerScreen = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <Animated.View 
-        style={[
-          styles.content,
-          { 
-            opacity: entryAnim,
-            transform: [{ scale: entryAnim.interpolate({
-              inputRange: [0, 1],
-              outputRange: [0.9, 1]
-            })}]
-          }
-        ]}
-      >
+    <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
+      <Animated.View style={[styles.content, animatedStyle]}>
         {currentSession ? (
           <View style={styles.timerContainer}>
-            <Text style={styles.timerTitle}>Current Fast</Text>
+            <Text style={styles.timerTitle}>Track your intermittent fasting</Text>
             
             {/* Circular Timer */}
             <CircularTimer 
               progress={progress} 
-              size={280} 
-              strokeWidth={15}
+              size={300} 
+              strokeWidth={18}
               duration={1000}
+              showPulse={true}
+              statusText={shouldShowFatBurning() ? "Fat Burning" : undefined}
               colors={{
                 background: phoenixColors.accent2,
                 progress: phoenixColors.primary,
@@ -221,24 +236,45 @@ const FastingTimerScreen = () => {
                 elapsedTime={elapsedTime}
                 targetDuration={currentSession.targetDuration}
                 progress={progress}
+                showFastingState={false} // We're showing it in the CircularTimer statusText
               />
             </CircularTimer>
             
-            <View style={styles.statsContainer}>
-              <View style={styles.stat}>
-                <Text style={styles.statLabel}>Started</Text>
-                <Text style={styles.statValue}>
-                  {new Date(currentSession.startTime).toLocaleTimeString()}
-                </Text>
-              </View>
-              
-              <View style={styles.stat}>
-                <Text style={styles.statLabel}>End Time</Text>
-                <Text style={styles.statValue}>
-                  {new Date(currentSession.startTime + currentSession.targetDuration).toLocaleTimeString()}
-                </Text>
-              </View>
-            </View>
+            <Card style={styles.statsCard}>
+              <Card.Content style={styles.statsContent}>
+                <View style={styles.statItem}>
+                  <IconButton
+                    icon="clock-start"
+                    size={24}
+                    iconColor={phoenixColors.primary}
+                    style={styles.statIcon}
+                  />
+                  <View>
+                    <Text style={styles.statLabel}>Started</Text>
+                    <Text style={styles.statValue}>
+                      {new Date(currentSession.startTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                    </Text>
+                  </View>
+                </View>
+                
+                <Divider style={styles.statDivider} />
+                
+                <View style={styles.statItem}>
+                  <IconButton
+                    icon="clock-end"
+                    size={24}
+                    iconColor={phoenixColors.secondary}
+                    style={styles.statIcon}
+                  />
+                  <View>
+                    <Text style={styles.statLabel}>End Time</Text>
+                    <Text style={styles.statValue}>
+                      {new Date(currentSession.startTime + currentSession.targetDuration).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                    </Text>
+                  </View>
+                </View>
+              </Card.Content>
+            </Card>
             
             <TimerControls
               isRunning={true}
@@ -249,16 +285,23 @@ const FastingTimerScreen = () => {
           </View>
         ) : (
           <View style={styles.startContainer}>
+            <Text style={styles.startTitle}>Ready to start your fast?</Text>
+            
             <CircularTimer 
               progress={0} 
-              size={200} 
-              strokeWidth={10}
+              size={240} 
+              strokeWidth={12}
               duration={0}
               showAnimation={false}
               style={styles.emptyCircularTimer}
             >
               <View style={styles.emptyTimerContent}>
-                <Text style={styles.emptyTimerText}>Ready to start?</Text>
+                <IconButton
+                  icon="timer-outline"
+                  size={40}
+                  iconColor={phoenixColors.primary}
+                />
+                <Text style={styles.emptyTimerText}>Start a fast</Text>
               </View>
             </CircularTimer>
             
@@ -270,11 +313,31 @@ const FastingTimerScreen = () => {
             />
             
             <Card style={styles.infoCard}>
-              <Card.Title title="Fasting Benefits" />
+              <Card.Title 
+                title="Fasting Benefits" 
+                titleStyle={styles.cardTitle}
+                right={(props) => (
+                  <IconButton
+                    {...props}
+                    icon="information-outline"
+                    iconColor={phoenixColors.primary}
+                  />
+                )}
+              />
               <Card.Content>
-                <Text variant="bodyMedium">
+                <Text variant="bodyMedium" style={styles.benefitText}>
                   Intermittent fasting can help with weight management, improve metabolic health, 
                   enhance cellular repair processes, and may provide other health benefits.
+                </Text>
+                
+                <View style={styles.benefitChips}>
+                  <Chip style={styles.benefitChip} icon="fire">Weight Loss</Chip>
+                  <Chip style={styles.benefitChip} icon="brain">Mental Clarity</Chip>
+                  <Chip style={styles.benefitChip} icon="heart-pulse">Heart Health</Chip>
+                </View>
+                
+                <Text variant="bodySmall" style={styles.customizationHint}>
+                  Choose from our suggested fasting durations or create your own custom schedule.
                 </Text>
               </Card.Content>
             </Card>
@@ -284,22 +347,27 @@ const FastingTimerScreen = () => {
               icon="history"
               onPress={() => navigation.navigate('FastingHistoryScreen' as never)}
               style={styles.historyButton}
+              contentStyle={styles.historyButtonContent}
+              labelStyle={styles.historyButtonLabel}
             >
               View Fasting History
             </Button>
           </View>
         )}
       </Animated.View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
     backgroundColor: phoenixColors.background,
-    justifyContent: 'center',
+  },
+  scrollContent: {
+    flexGrow: 1,
+    padding: 16,
+    paddingTop: 24,
   },
   content: {
     flex: 1,
@@ -312,77 +380,122 @@ const styles = StyleSheet.create({
   timerContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+    paddingVertical: 20,
   },
   timerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 24,
     color: phoenixColors.text,
+    textAlign: 'center',
   },
   circularTimer: {
-    marginVertical: 20,
+    marginVertical: 24,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 6,
+  },
+  statsCard: {
+    width: '90%',
+    marginVertical: 24,
+    borderRadius: 16,
     elevation: 4,
   },
+  statsContent: {
+    paddingVertical: 8,
+  },
+  statItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  statIcon: {
+    margin: 0,
+    marginRight: 12,
+  },
+  statLabel: {
+    fontSize: 14,
+    color: phoenixColors.accent1,
+    marginBottom: 2,
+  },
+  statValue: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: phoenixColors.text,
+  },
+  statDivider: {
+    marginVertical: 8,
+  },
+  startContainer: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 20,
+  },
+  startTitle: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 24,
+    color: phoenixColors.text,
+    textAlign: 'center',
+  },
   emptyCircularTimer: {
-    marginVertical: 20,
-    opacity: 0.7,
+    marginVertical: 24,
+    opacity: 0.8,
   },
   emptyTimerContent: {
     alignItems: 'center',
     justifyContent: 'center',
   },
   emptyTimerText: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: '600',
     color: phoenixColors.primary,
-  },
-  statsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-    marginBottom: 20,
-    paddingHorizontal: 20,
-  },
-  stat: {
-    alignItems: 'center',
-    backgroundColor: phoenixColors.surface,
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 10,
-    minWidth: 120,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
-  },
-  statLabel: {
-    fontSize: 14,
-    marginBottom: 4,
-    color: phoenixColors.accent1,
-  },
-  statValue: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: phoenixColors.text,
-  },
-  startContainer: {
-    flex: 1,
-    alignItems: 'center',
+    marginTop: 8,
   },
   infoCard: {
-    marginTop: 20,
+    marginTop: 24,
     marginBottom: 20,
     width: '100%',
-    borderRadius: 10,
+    borderRadius: 16,
     overflow: 'hidden',
+    elevation: 4,
+  },
+  cardTitle: {
+    fontWeight: 'bold',
+  },
+  benefitText: {
+    lineHeight: 22,
+    marginBottom: 16,
+  },
+  benefitChips: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  benefitChip: {
+    margin: 4,
+    backgroundColor: phoenixColors.surface,
   },
   historyButton: {
-    marginTop: 10,
+    marginTop: 24,
+    borderRadius: 30,
+    borderWidth: 2,
+    borderColor: phoenixColors.primary,
+  },
+  historyButtonContent: {
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+  },
+  historyButtonLabel: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  customizationHint: {
+    marginTop: 16,
+    fontStyle: 'italic',
+    color: phoenixColors.accent1,
+    textAlign: 'center',
   },
 });
 

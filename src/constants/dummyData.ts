@@ -15,6 +15,16 @@ export const dummyUser: User = {
   id: '1',
   email: 'user@example.com',
   name: 'John Doe',
+  profileImage: undefined, // Will be populated when user uploads an image
+  stats: {
+    age: 28,
+    weight: 75, // in kg
+    height: 180, // in cm
+    fitnessLevel: 'intermediate',
+    goals: ['Weight loss', 'Muscle gain', 'Better sleep'],
+    weeklyActivityLevel: 4, // 4 days per week
+  },
+  transformationDrivers: ['health', 'mindfulness'],
 };
 
 // Dummy fasting sessions
@@ -72,8 +82,95 @@ export const dummyJournalEntries: JournalEntry[] = [
 
 // Dummy challenges
 export const dummyChallenges: Challenge[] = [
+  // Predefined fasting challenges
   {
     id: '1',
+    title: 'Intro to I.F. Challenge',
+    description: 'Complete one 12 hr, 16 hr or 20 hour fast.',
+    frequency: 'daily',
+    startDate: now,
+    endDate: now + 2 * dayInMs, // 2 days to complete
+    progress: [],
+    type: 'fasting',
+    fastingType: 'intermittent',
+    fastingDuration: 16, // Default to 16 hours, but user can choose 12, 16, or 20
+    daysRequired: 1,
+    trophy: {
+      name: 'I.F. Beginner',
+      description: 'Successfully completed your first intermittent fast!',
+      awarded: false
+    }
+  },
+  {
+    id: '2',
+    title: '3-Day Fasting Challenge',
+    description: 'Complete 3 consecutive days of a 16 or 20 hour fast.',
+    frequency: 'daily',
+    startDate: now,
+    endDate: now + 4 * dayInMs, // 4 days to complete
+    progress: [],
+    type: 'fasting',
+    fastingType: 'intermittent',
+    fastingDuration: 16, // Default to 16 hours, but user can choose 16 or 20
+    daysRequired: 3,
+    trophy: {
+      name: 'Fasting Warrior',
+      description: 'Successfully completed 3 consecutive days of intermittent fasting!',
+      awarded: false
+    }
+  },
+  {
+    id: '3',
+    title: 'OMAD Challenge',
+    description: 'Eat only one meal a day for 1 Day.',
+    frequency: 'daily',
+    startDate: now,
+    endDate: now + 2 * dayInMs, // 2 days to complete
+    progress: [],
+    type: 'fasting',
+    fastingType: 'omad',
+    daysRequired: 1,
+    trophy: {
+      name: 'OMAD Initiate',
+      description: 'Successfully completed your first day of One Meal A Day!',
+      awarded: false
+    }
+  },
+  {
+    id: '4',
+    title: '3-Day OMAD Challenge',
+    description: 'Eat only one meal a day for 3 consecutive days.',
+    frequency: 'daily',
+    startDate: now,
+    endDate: now + 4 * dayInMs, // 4 days to complete
+    progress: [],
+    type: 'fasting',
+    fastingType: 'omad',
+    daysRequired: 3,
+    trophy: {
+      name: 'OMAD Master',
+      description: 'Successfully completed 3 consecutive days of One Meal A Day!',
+      awarded: false
+    }
+  },
+  {
+    id: '5',
+    title: 'Personalized Challenge',
+    description: 'Create a custom fasting challenge with AI assistance.',
+    frequency: 'daily',
+    startDate: now,
+    endDate: null, // Will be set when created
+    progress: [],
+    type: 'ai-generated',
+    trophy: {
+      name: 'Challenge Creator',
+      description: 'Successfully created and completed your personalized challenge!',
+      awarded: false
+    }
+  },
+  // Keep existing challenges for backward compatibility
+  {
+    id: '6',
     title: '30-Day Intermittent Fasting',
     description: 'Complete a 16:8 intermittent fasting schedule for 30 days',
     frequency: 'daily',
@@ -83,9 +180,10 @@ export const dummyChallenges: Challenge[] = [
       date: now - (10 - i) * dayInMs,
       isCompleted: true,
     })),
+    type: 'custom'
   },
   {
-    id: '2',
+    id: '7',
     title: 'Daily Meditation',
     description: 'Meditate for at least 10 minutes every day',
     frequency: 'daily',
@@ -95,6 +193,7 @@ export const dummyChallenges: Challenge[] = [
       date: now - (5 - i) * dayInMs,
       isCompleted: i !== 2, // Missed one day
     })),
+    type: 'custom'
   },
 ];
 

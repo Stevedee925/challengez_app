@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challengez - Ignite Your Journey to Peak Performance</title>
+    <!-- Meta tags for SEO -->
+    <meta name="description" content="Challengez helps you build healthy habits, track your progress, and stay motivated with fasting timers, daily journals, personal challenges, and daily rituals.">
+    <meta name="keywords" content="challenges, habits, fasting, journal, rituals, fitness, wellness, self-improvement">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://challengez.app/">
+    <meta property="og:title" content="Challengez - Ignite Your Journey to Peak Performance">
+    <meta property="og:description" content="Build healthy habits, track your progress, and stay motivated with Challengez.">
+    <meta property="og:image" content="https://challengez.app/assets/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://challengez.app/">
+    <meta property="twitter:title" content="Challengez - Ignite Your Journey to Peak Performance">
+    <meta property="twitter:description" content="Build healthy habits, track your progress, and stay motivated with Challengez.">
+    <meta property="twitter:image" content="https://challengez.app/assets/og-image.jpg">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    <style>
+        :root {
+            --primary-color: #B22222; /* Phoenix primary - Deep crimson */
+            --secondary-color: #DAA520; /* Phoenix secondary - Gold */
+            --text-color: #333333; /* Phoenix text */
+            --light-text: #4B4B4B; /* Phoenix accent1 - Charcoal */
+            --background-color: #F5F5F5; /* Phoenix background */
+            --card-background: #FFFFFF; /* Phoenix surface */
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --accent1: #4B4B4B; /* Phoenix accent1 - Charcoal */
+            --accent2: #A9A9A9; /* Phoenix accent2 - Ash gray */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background-color: var(--card-background);
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: var(--shadow);
+        }
+        
+        .hero-image {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .mockup-image {
+            max-width: 100%;
+            height: auto;
+            max-height: 400px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .logo-container {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .logo-icon {
+            font-size: 100px;
+            color: var(--primary-color);
+            animation: flame-rotate 6s ease-in-out infinite;
+        }
+
+        @keyframes flame-rotate {
+            0% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+            100% { transform: rotate(-5deg); }
+        }
+
+        .title {
+            font-size: 36px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 22px;
+            color: var(--secondary-color);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .description {
+            font-size: 16px;
+            color: var(--text-color);
+            margin-bottom: 24px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: bold;
+            text-decoration: none;
+            margin: 0 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #8B0000; /* Darker shade of Phoenix primary */
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(178, 34, 34, 0.1); /* Phoenix primary with transparency */
+            transform: translateY(-2px);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: var(--card-background);
+            margin: -20px 24px 0;
+            border-radius: 15px;
+            padding: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--light-text);
+            margin-top: 4px;
+        }
+
+        .stat-divider {
+            width: 1px;
+            height: 40px;
+            background-color: var(--accent2); /* Phoenix accent2 - Ash gray */
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 60px 20px;
+            margin-top: 16px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text-color);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--light-text);
+            margin-bottom: 24px;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            width: calc(33.333% - 20px);
+            background-color: var(--card-background);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon-container {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            color: var(--primary-color);
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--text-color);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .feature-description {
+            font-size: 14px;
+            color: var(--light-text);
+            text-align: center;
+            margin-top: 12px;
+        }
+        
+        .feature-image {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .feature-img {
+            max-width: 100%;
+            height: auto;
+            max-height: 150px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Testimonials */
+        .testimonial-container {
+            display: flex;
+            overflow-x: auto;
+            padding: 20px 0;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .testimonial-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+
+        .testimonial-card {
+            flex: 0 0 auto;
+            width: 280px;
+            background-color: var(--card-background);
+            border-radius: 10px;
+            padding: 20px;
+            margin-right: 16px;
+            box-shadow: var(--shadow);
+            scroll-snap-align: start;
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .testimonial-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+
+        .testimonial-info {
+            flex: 1;
+        }
+
+        .testimonial-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .testimonial-role {
+            font-size: 14px;
+            color: var(--light-text);
+        }
+
+        .testimonial-text {
+            font-size: 14px;
+            color: var(--text-color);
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        /* Waitlist Section */
+        .waitlist-section {
+            padding: 40px 20px;
+            background-color: var(--primary-color);
+            margin-top: 40px;
+        }
+
+        .waitlist-card {
+            background-color: var(--card-background);
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: var(--shadow);
+        }
+
+        .waitlist-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .waitlist-subtitle {
+            font-size: 16px;
+            color: var(--light-text);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .waitlist-image {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .waitlist-mockup {
+            max-width: 100%;
+            height: auto;
+            max-height: 250px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-container {
+            margin-top: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--accent2); /* Phoenix accent2 - Ash gray */
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .privacy-text {
+            font-size: 12px;
+            color: var(--accent2); /* Phoenix accent2 - Ash gray */
+            margin-top: 16px;
+            text-align: center;
+        }
+
+        /* Thank You Screen */
+        .thank-you-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            text-align: center;
+            background-color: var(--background-color);
+        }
+
+        .thank-you-icon {
+            font-size: 100px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .thank-you-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .thank-you-subtitle {
+            font-size: 18px;
+            color: var(--text-color);
+            margin-bottom: 16px;
+        }
+
+        .thank-you-text {
+            font-size: 16px;
+            color: var(--light-text);
+            margin-bottom: 24px;
+            max-width: 600px;
+        }
+
+        .referral-card {
+            background-color: var(--card-background);
+            border-radius: 10px;
+            padding: 20px;
+            width: 100%;
+            max-width: 500px;
+            margin: 24px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .referral-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--text-color);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .referral-text {
+            font-size: 14px;
+            color: var(--light-text);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .social-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .social-button i {
+            margin-right: 8px;
+        }
+
+        .facebook {
+            background-color: var(--primary-color); /* Phoenix primary */
+        }
+
+        .twitter {
+            background-color: var(--secondary-color); /* Phoenix secondary */
+        }
+
+        .whatsapp {
+            background-color: var(--accent1); /* Phoenix accent1 */
+        }
+
+        .back-button {
+            margin-top: 24px;
+            border: 2px solid var(--primary-color);
+            background-color: transparent;
+            color: var(--primary-color);
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(178, 34, 34, 0.1); /* Phoenix primary with transparency */
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--accent1); /* Phoenix accent1 - Charcoal */
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--accent2); /* Phoenix accent2 - Ash gray */
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: white;
+            margin: 0 8px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .footer-dot {
+            color: var(--accent2); /* Phoenix accent2 - Ash gray */
+            margin: 0 4px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                margin: 8px 0;
+                width: 80%;
+            }
+
+            .stats-section {
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            .stat-item {
+                margin: 10px 0;
+            }
+
+            .stat-divider {
+                width: 80%;
+                height: 1px;
+                margin: 10px 0;
+            }
+
+            .feature-card {
+                width: 100%;
+            }
+
+            .testimonial-card {
+                width: 90%;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .feature-card {
+                width: calc(50% - 15px);
+            }
+        }
+
+        /* Hide/Show Elements */
+        .hidden {
+            display: none;
+        }
+        
+        /* Cookie Consent Banner */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--card-background);
+            padding: 15px 20px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-top: 1px solid var(--accent2);
+        }
+        
+        .cookie-text {
+            flex: 1;
+            font-size: 14px;
+            color: var(--text-color);
+            margin-right: 20px;
+        }
+        
+        .cookie-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .cookie-btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            border: none;
+        }
+        
+        .accept-cookies {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .decline-cookies {
+            background-color: var(--accent2);
+            color: white;
+        }
+        
+        /* Scroll Depth Indicator */
+        .scroll-progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        
+        .scroll-progress-bar {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.2s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress-container">
+        <div class="scroll-progress-bar" id="scroll-progress-bar"></div>
+    </div>
+    <div id="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="logo-container">
+                    <i class="fas fa-fire logo-icon"></i>
+                </div>
+                <h1 class="title">Challengez</h1>
+                <h2 class="subtitle">Transform Your Daily Habits Into Lasting Change</h2>
+                <p class="description">
+                    The key to success isn't starting strong—it's staying consistent. Whether you're fasting, working out, 
+                    or building a new routine, Challengez turns your commitments into achievements that last.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#waitlist" class="btn btn-primary">Get Early Access</a>
+                    <a href="#features" class="btn btn-secondary">Explore Features</a>
+                </div>
+                <div class="hero-image">
+                    <img src="assets/app-mockup.jpg" alt="Challengez app on smartphone" class="mockup-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <div class="container">
+            <div class="stats-section">
+                <div class="stat-item">
+                    <div class="stat-number">150+</div>
+                    <div class="stat-label">Beta Testers</div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <div class="stat-number">4.8</div>
+                    <div class="stat-label">User Rating</div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <div class="stat-number">30+</div>
+                    <div class="stat-label">Challenge Types</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <section id="features" class="section">
+            <div class="container">
+                <h2 class="section-title">Transform Your Life with Challengez</h2>
+                <p class="section-subtitle">
+                    Our app provides all the tools you need to build better habits, stay accountable, and achieve your goals.
+                </p>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon-container">
+                            <i class="fas fa-stopwatch feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Fasting Timer</h3>
+                        <div class="feature-image">
+                            <img src="assets/feature-fasting.jpg" alt="Fasting Timer Feature" class="feature-img">
+                        </div>
+                        <p class="feature-description">
+                            Achieve your weight loss goals with our beautiful circular fasting timer. Stay on track with gentle reminders and celebrate your streaks to build momentum.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon-container">
+                            <i class="fas fa-book-open feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Daily Journal</h3>
+                        <div class="feature-image">
+                            <img src="assets/feature-journal.jpg" alt="Daily Journal Feature" class="feature-img">
+                        </div>
+                        <p class="feature-description">
+                            Capture your thoughts and track your emotional journey. Our journal helps you identify patterns, celebrate wins, and build self-awareness that accelerates your growth.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon-container">
+                            <i class="fas fa-fire feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Personal Challenges</h3>
+                        <div class="feature-image">
+                            <img src="assets/feature-challenges.jpg" alt="Personal Challenges Feature" class="feature-img">
+                        </div>
+                        <p class="feature-description">
+                            Push your limits with personalized challenges that match your goals. From 30-day fitness plans to mindfulness streaks, turn ambition into achievement with friends or solo.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon-container">
+                            <i class="fas fa-sync feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Daily Rituals</h3>
+                        <div class="feature-image">
+                            <img src="assets/feature-rituals.jpg" alt="Daily Rituals Feature" class="feature-img">
+                        </div>
+                        <p class="feature-description">
+                            Transform your daily routines into powerful rituals. Our habit-stacking approach helps you build consistent practices that compound over time for remarkable personal growth.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon-container">
+                            <i class="fas fa-chart-line feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Progress Tracking</h3>
+                        <div class="feature-image">
+                            <img src="assets/feature-tracking.jpg" alt="Progress Tracking Feature" class="feature-img">
+                        </div>
+                        <p class="feature-description">
+                            See your growth with beautiful visualizations that celebrate every win. Our analytics turn your daily efforts into motivating trends that keep you moving forward.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon-container">
+                            <i class="fas fa-users feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Social Motivation</h3>
+                        <div class="feature-image">
+                            <img src="assets/feature-social.jpg" alt="Social Motivation Feature" class="feature-img">
+                        </div>
+                        <p class="feature-description">
+                            Harness the power of community to reach your goals. Share achievements, participate in group challenges, and give each other the accountability that makes success inevitable.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">What Our Users Say</h2>
+                <p class="section-subtitle">
+                    Join thousands of users who are already transforming their lives with Challengez.
+                </p>
+                <div class="testimonial-container">
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <div class="testimonial-avatar">S</div>
+                            <div class="testimonial-info">
+                                <div class="testimonial-name">Sarah J.</div>
+                                <div class="testimonial-role">Fitness Enthusiast</div>
+                            </div>
+                        </div>
+                        <p class="testimonial-text">
+                            "Challengez helped me establish a consistent fasting routine. I have lost 15 pounds in just 2 months!"
+                        </p>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <div class="testimonial-avatar">M</div>
+                            <div class="testimonial-info">
+                                <div class="testimonial-name">Mike T.</div>
+                                <div class="testimonial-role">Entrepreneur</div>
+                            </div>
+                        </div>
+                        <p class="testimonial-text">
+                            "The daily rituals feature transformed my morning routine. I am more productive than ever."
+                        </p>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <div class="testimonial-avatar">L</div>
+                            <div class="testimonial-info">
+                                <div class="testimonial-name">Leila K.</div>
+                                <div class="testimonial-role">College Student</div>
+                            </div>
+                        </div>
+                        <p class="testimonial-text">
+                            "I love challenging my friends! It keeps us all accountable and makes fitness fun again."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Waitlist Section -->
+        <section id="waitlist" class="waitlist-section">
+            <div class="container">
+                <div class="waitlist-card">
+                    <h2 class="waitlist-title">Join the Waitlist</h2>
+                    <p class="waitlist-subtitle">
+                        Be among the first to experience Challengez
+                    </p>
+                    <div class="waitlist-image">
+                        <img src="assets/early-access.jpg" alt="Be the first to experience Challengez" class="waitlist-mockup">
+                    </div>
+                    <div class="form-container">
+                        <form id="waitlist-form">
+                            <div class="input-group">
+                                <label for="name" class="input-label">Name (optional)</label>
+                                <input type="text" id="name" class="input-field" placeholder="Your name">
+                            </div>
+                            <div class="input-group">
+                                <label for="email" class="input-label">Email</label>
+                                <input type="email" id="email" class="input-field" placeholder="Your email" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Join the Waitlist</button>
+                        </form>
+                    </div>
+                    <p class="privacy-text">
+                        By joining, you agree to our Terms of Service and Privacy Policy.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <h2 class="footer-title">Challengez</h2>
+                <p class="footer-text">
+                    © <span id="current-year">2025</span> Challengez. All rights reserved.
+                </p>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <span class="footer-dot">•</span>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <span class="footer-dot">•</span>
+                    <a href="#" class="footer-link">Contact Us</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Thank You Screen (Hidden by default) -->
+    <div id="thank-you-screen" class="thank-you-container hidden">
+        <i class="fas fa-check-circle thank-you-icon"></i>
+        <h2 class="thank-you-title">You're on the list!</h2>
+        <h3 class="thank-you-subtitle">Thank you for joining our waitlist</h3>
+        <p class="thank-you-text">
+            You're now in line for early access to Challengez. We'll notify you as soon as it's your turn to join the beta.
+        </p>
+        
+        <div class="referral-card">
+            <h3 class="referral-title">Want to move up the list?</h3>
+            <p class="referral-text">
+                Share Challengez with your friends and get priority access when they join the waitlist.
+            </p>
+            <div class="social-buttons">
+                <a href="#" class="social-button facebook">
+                    <i class="fab fa-facebook-f"></i> Share
+                </a>
+                <a href="#" class="social-button twitter">
+                    <i class="fab fa-twitter"></i> Tweet
+                </a>
+                <a href="#" class="social-button whatsapp">
+                    <i class="fab fa-whatsapp"></i> Send
+                </a>
+            </div>
+        </div>
+        
+        <button id="back-button" class="back-button">Back to Home</button>
+    </div>
+    
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner" class="cookie-banner hidden">
+        <div class="cookie-text">
+            We use cookies to improve your experience and analyze website traffic. 
+            By clicking "Accept", you consent to our use of cookies.
+            <a href="#" style="color: var(--primary-color);">Learn more</a>
+        </div>
+        <div class="cookie-buttons">
+            <button id="decline-cookies" class="cookie-btn decline-cookies">Decline</button>
+            <button id="accept-cookies" class="cookie-btn accept-cookies">Accept</button>
+        </div>
+    </div>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Analytics Helper Function
+        function trackEvent(eventCategory, eventAction, eventLabel = null, eventValue = null) {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', eventAction, {
+                    'event_category': eventCategory,
+                    'event_label': eventLabel,
+                    'value': eventValue
+                });
+                console.log(`Analytics: Tracked ${eventCategory} - ${eventAction}${eventLabel ? ' - ' + eventLabel : ''}`);
+            }
+        }
+
+        // Simulate decreasing spots
+        let remainingSpots = 150;
+        const spotsElement = document.getElementById('remaining-spots');
+        
+        setInterval(() => {
+            if (remainingSpots > 120) {
+                remainingSpots--;
+                spotsElement.textContent = remainingSpots;
+            }
+        }, 60000); // Decrease by 1 every minute
+        
+        // Track page view on load
+        document.addEventListener('DOMContentLoaded', function() {
+            trackEvent('Page', 'view', 'landing_page');
+            
+            // Show cookie banner if consent not already given
+            if (!localStorage.getItem('cookie_consent')) {
+                document.getElementById('cookie-banner').classList.remove('hidden');
+            }
+        });
+
+        // Handle waitlist form submission
+        const waitlistForm = document.getElementById('waitlist-form');
+        const mainContent = document.getElementById('main-content');
+        const thankYouScreen = document.getElementById('thank-you-screen');
+        const backButton = document.getElementById('back-button');
+
+        waitlistForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const name = document.getElementById('name').value || '';
+            
+            if (!email) {
+                alert('Please enter your email address');
+                return;
+            }
+            
+            // Track form submission attempt
+            trackEvent('Waitlist', 'form_submit_attempt', email);
+            
+            // Simulate form submission
+            const submitButton = waitlistForm.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Submitting...';
+            
+            // Store data in localStorage (simulating a database)
+            setTimeout(() => {
+                const waitlistData = {
+                    email: email,
+                    name: name,
+                    timestamp: new Date().toISOString(),
+                    referrer: document.referrer || 'direct'
+                };
+                
+                // Get existing waitlist or create new array
+                const existingWaitlist = localStorage.getItem('waitlist');
+                const waitlist = existingWaitlist ? JSON.parse(existingWaitlist) : [];
+                
+                // Add new signup to waitlist
+                waitlist.push(waitlistData);
+                
+                // Save updated waitlist
+                localStorage.setItem('waitlist', JSON.stringify(waitlist));
+                
+                // Update remaining spots
+                remainingSpots--;
+                spotsElement.textContent = remainingSpots;
+                
+                // Track successful conversion
+                trackEvent('Waitlist', 'signup_success', email, waitlist.length);
+                
+                // Show thank you screen
+                mainContent.classList.add('hidden');
+                thankYouScreen.classList.remove('hidden');
+                
+                // Reset form
+                waitlistForm.reset();
+                submitButton.disabled = false;
+                submitButton.textContent = 'Join the Waitlist';
+            }, 1500);
+        });
+
+        // Back button functionality
+        backButton.addEventListener('click', function() {
+            thankYouScreen.classList.add('hidden');
+            mainContent.classList.remove('hidden');
+            
+            // Track back button click
+            trackEvent('Navigation', 'click', 'back_to_home');
+            
+            // Scroll to top
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                // Track navigation click
+                trackEvent('Navigation', 'click', targetId.substring(1));
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Track social share clicks
+        document.querySelectorAll('.social-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const platform = this.classList.contains('facebook') ? 'facebook' : 
+                                this.classList.contains('twitter') ? 'twitter' : 'whatsapp';
+                trackEvent('Social', 'share', platform);
+            });
+        });
+        
+        // Cookie consent handlers
+        document.getElementById('accept-cookies').addEventListener('click', function() {
+            localStorage.setItem('cookie_consent', 'accepted');
+            document.getElementById('cookie-banner').classList.add('hidden');
+            trackEvent('Cookies', 'accept');
+        });
+        
+        document.getElementById('decline-cookies').addEventListener('click', function() {
+            localStorage.setItem('cookie_consent', 'declined');
+            document.getElementById('cookie-banner').classList.add('hidden');
+            trackEvent('Cookies', 'decline');
+        });
+        
+        // Scroll depth tracking
+        const scrollProgressBar = document.getElementById('scroll-progress-bar');
+        let scrollDepthMarkers = [25, 50, 75, 100];
+        let reachedDepths = [];
+        
+        window.addEventListener('scroll', function() {
+            // Update scroll progress bar
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            scrollProgressBar.style.width = scrolled + "%";
+            
+            // Track scroll depth
+            scrollDepthMarkers.forEach(marker => {
+                if (scrolled >= marker && !reachedDepths.includes(marker)) {
+                    reachedDepths.push(marker);
+                    trackEvent('Scroll', 'depth_reached', marker + '%', marker);
+                }
+            });
+        });
+        
+        // A/B Testing setup (basic implementation)
+        function setupABTest() {
+            // Only set up if user hasn't been assigned a variant
+            if (!localStorage.getItem('ab_test_variant')) {
+                // Randomly assign variant A or B
+                const variant = Math.random() < 0.5 ? 'A' : 'B';
+                localStorage.setItem('ab_test_variant', variant);
+                
+                // Track which variant was assigned
+                trackEvent('ABTest', 'assigned_variant', variant);
+                
+                // Apply variant-specific changes
+                if (variant === 'B') {
+                    // Example: Change the primary CTA text for variant B
+                    const primaryCTA = document.querySelector('.hero-buttons .btn-primary');
+                    if (primaryCTA) {
+                        primaryCTA.textContent = 'Get Early Access';
+                        trackEvent('ABTest', 'applied_changes', 'cta_text_changed');
+                    }
+                }
+            }
+        }
+        
+        // Run A/B test setup
+        setupABTest();
+    </script>
+</body>
+</html>

@@ -8,6 +8,7 @@ import { phoenixTheme, phoenixColors } from '../../../constants/theme';
 import SplashPage from './SplashPage';
 import FeatureHighlightsPage from './FeatureHighlightsPage';
 import PersonalizationPage from './PersonalizationPage';
+import UserStatsPage from './UserStatsPage';
 import AccountCreationPage from './AccountCreationPage';
 import FirstChallengePage from './FirstChallengePage';
 
@@ -29,10 +30,14 @@ const phoenixOnboardingPages = [
   },
   {
     id: '4',
-    component: AccountCreationPage,
+    component: UserStatsPage,
   },
   {
     id: '5',
+    component: AccountCreationPage,
+  },
+  {
+    id: '6',
     component: FirstChallengePage,
   },
 ];
@@ -210,7 +215,7 @@ const PhoenixOnboardingScreen = ({ onComplete }: PhoenixOnboardingScreenProps) =
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5', // Phoenix background color
+    backgroundColor: phoenixColors.background, // Phoenix background color
   },
   pageContainer: {
     width,

@@ -44,21 +44,25 @@ const SplashPage = () => {
 
   return (
     <View style={phoenixStyles.container}>
-      {/* We'll use the app icon as a placeholder for the phoenix animation */}
-      {/* In a real implementation, this would be replaced with a Lottie animation */}
+      {/* Phoenix Lottie animation */}
       <Animated.View
         style={{
           opacity: fadeAnim,
           transform: [{ scale: scaleAnim }],
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
-        <View style={phoenixStyles.iconContainer}>
-          <Image
-            source={require('../../../../assets/icon.png')}
-            style={phoenixStyles.logo}
-            resizeMode="contain"
-          />
-        </View>
+        <View
+          style={{
+            width: 200,
+            height: 200,
+            borderRadius: 100,
+            backgroundColor: '#F9A825',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        />
       </Animated.View>
 
       <Animated.Text
